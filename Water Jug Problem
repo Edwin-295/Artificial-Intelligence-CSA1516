@@ -1,0 +1,20 @@
+    queue.append((0,0))
+    while queue:
+        a,b=queue.popleft()
+        if(a,b) in visited:
+            continue
+        visited.add((a,b))
+        print(f"jug A:{a} L, Jug B: {b}L")
+        if a==2:
+            print("goal reached")
+            return
+        capA, capB= 4,3
+        next_states=[
+            (capA, b), (a, capB), (0,b), (a,0),
+            (min(a+b, capA), max(-, a+b-capA)),
+            (max(0, a+b-capB), min(a+b, capB))
+            ]
+        for state in next_states:
+            if state not in visited:
+                queue.append(state)
+waterjug()

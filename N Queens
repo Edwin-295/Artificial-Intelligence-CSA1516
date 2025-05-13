@@ -1,0 +1,44 @@
+from collections import deque
+
+def water_jug_bfs():
+    capA, capB = 4, 3
+    goal = 2
+    visited = set()
+    queue = deque()
+    parent = {}
+
+    start = (0, 0)
+    queue.append(start)
+    visited.add(start)
+    parent[start] = None
+
+    while queue:
+        a, b = queue.popleft()
+        if a == goal:
+            path = []
+            while (a, b) is not None:
+                path.append((a, b))
+                a, b = parent[(a, b)] if parent[(a, b)] else (None, None)
+            path.reverse()
+            for step in path:
+                print(f"Jug A: {step[0]}L, Jug B: {step[1]}L")
+            print("Goal reached")
+            return
+
+        next_states = set()
+        next_states.add((capA, b))
+        next_states.add((a, capB))
+        next_states.add((0, b))
+        next_states.add((a, 0))
+        pour = min(a, capB - b)
+        next_states.add((a - pour, b + pour))
+        pour = min(b, capA - a)
+        next_states.add((a + pour, b - pour))
+
+        for state in next_states:
+            if state not in visited:
+                visited.add(state)
+                parent[state] = (a, b)
+                queue.append(state)
+
+water_jug_bfs()
